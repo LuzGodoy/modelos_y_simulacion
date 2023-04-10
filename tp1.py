@@ -1,12 +1,24 @@
+from sys import argv
+import pandas as pd
+from termcolor import colored
+import argparse
 
-# Trabajo Práctico número 1
-# Alumnos: LuzGodoy y GuillermoArregin
+script, filename = argv
+data = pd.read_csv(filename, header=None)
 
-# Un programa que permita generar valores simulados que sigan una
-# determinada distribución de probabilidad.
+print(colored('\nDatos en el archivo prob_dist.csv', "magenta"))
+print(colored(data, 'cyan'))
 
-# tp1 prob_dist.csv values.csv n [-d] [-x]
-# n -> Cantidad de valores que se desean generar
-# d -> Flag para mostrar el estadistico de prueba ks
-# x -> Flag para mostrar el estadistico de prueba ji cuadrado
+# 1. primero leer valores esperados y sus probabilidades 
+# ...puede ser en un mapa en el que la key sea el 
+# ...valor esperado y la probabilidad sea el value. 
+# ...por que el v.e. no se repite pero la probabilidad 
+# ...si se puede repetir
+# 1.1. opc. ordenar el mapa por valores esperados
+
+# 2. sacar las probabilidades acumuladas
+# 3. saco n numeros aleatorios para la simulación
+# 4. iterar entre los datos simulados, categorizandolos 
+# segun el rango de la probabilida correspondiente.
+
 
