@@ -2,20 +2,23 @@
 
 Alumnos: Luz Godoy y Guillermo Arregin
 
+Este repositorio contiene un programa que permite generar valores 
+simulados que sigan una determinada distribución de probabilidad.
+
 **NOTA:** 
 Es necesario previamente correr los comandos:
 > py -m pip install pandas
 
+> pip install argparse
+
 > pip install termcolor
 
-Un programa que permite generar valores simulados que sigan una
-determinada distribución de probabilidad.
 
 ## Cómo ejecutar el script?
 
 > py tp1 prob_dist.csv values.csv n [-d] [-x]
 
-prob_dist.csv     col1->ValoresEsperados     col2->Probabilidades
+prob_dist.csv -> La primera columna contiene los valores esperados y la segunda las probabilidades. 
 
 n -> Cantidad de valores que se desean generar
 
