@@ -18,7 +18,9 @@ Es necesario previamente correr los comandos:
 
 > py tp1 prob_dist.csv values.csv n [-d] [-x]
 
-prob_dist.csv -> La primera columna contiene los valores esperados y la segunda las probabilidades. 
+prob_dist.csv -> Nombre del archivo csv que contiene en la primera columna contiene los valores esperados y la segunda las probabilidades. 
+
+values.csv -> Nombre del archivo csv que contiene los valores generados. 
 
 n -> Cantidad de valores que se desean generar
 

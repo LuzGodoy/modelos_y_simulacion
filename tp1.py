@@ -8,7 +8,8 @@ parser = argparse.ArgumentParser(
 )
 
 # Define positional arguments
-parser.add_argument('filename', type=str, help='Nombre del archivo csv para procesar')
+parser.add_argument('inputFilename', type=str, help='Nombre del archivo csv de entrada para procesar')
+parser.add_argument('outputFilename', type=str, help='Nombre del archivo csv de salida para almacenar los resultados')
 parser.add_argument('n', type=int, help='Cantidad de valores aleatorios que se desean generar')
 
 # Define and read optional arguments
@@ -17,7 +18,7 @@ parser.add_argument('-x', '--pruebaJi',action='store_true', help='Flag para most
 args = parser.parse_args()
 
 # Read Comma Separated Value's file
-data = pd.read_csv(args.filename, header=None)
+data = pd.read_csv(args.inputFilename, header=None)
 data.columns= ['Valor esperado', 'Probabilidad']
 data = data.sort_values('Valor esperado', ignore_index= True)
 
@@ -40,10 +41,12 @@ for number in randomNumbers:
 
 # Categorize the generated random numbers according to the cumulative probabilities
 simulation= [0] * len(acum)
+
 for randomNumber in randomNumbers:
     i=0
     founded= False
-    while(not founded):
+
+    while(not founded) and i<len(acum):
         if acum[i]>randomNumber:
             founded=True
             simulation[max(0, i)]+=1
@@ -53,6 +56,8 @@ data['Simulación']=simulation
 
 print(colored('\nDatos en el archivo prob_dist.csv', "magenta"))
 print(colored(data, 'cyan'), '\n')
+
+data.to_csv(args.outputFilename, index=False, columns=['Simulación'])
 
 if args.pruebaKs:
     print(colored('\n\nPrueba KS activada', "magenta"))
