@@ -25,3 +25,7 @@ n -> Cantidad de valores que se desean generar
 d -> Flag para mostrar el estadistico de prueba ks
 
 x -> Flag para mostrar el estadistico de prueba ji cuadrado
+
+Se puede usar la flag -h para mostrar un mensaje de ayuda, que explica como utilizar los parametros.
+
+> py tp1.py -h
