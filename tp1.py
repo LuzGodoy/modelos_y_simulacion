@@ -30,10 +30,7 @@ for prob in data.iloc[:,1]:
 
 data['Probabilidad Acum']=acum
 
-print(colored('\nDatos en el archivo prob_dist.csv', "magenta"))
-print(colored(data, 'cyan'), '\n')
-
-# Generate a list of random numbers between 0 and 1
+# Generate a list of n random numbers between 0 and 1
 randomNumbers = []
 for _ in range(args.n):
     randomNumbers.append(random.random())
@@ -41,7 +38,21 @@ print(colored('{} números aleatorios generados'.format(args.n), 'green'))
 for number in randomNumbers:
     print("{:.2f}".format(number), end= ' ')
 
-# TODO: Iterar entre los datos simulados, categorizandolos segun el rango de la probabilida correspondiente.
+# Categorize the generated random numbers according to the cumulative probabilities
+simulation= [0] * len(acum)
+for randomNumber in randomNumbers:
+    i=0
+    founded= False
+    while(not founded):
+        if acum[i]>randomNumber:
+            founded=True
+            simulation[max(0, i)]+=1
+        i+=1
+
+data['Simulación']=simulation
+
+print(colored('\nDatos en el archivo prob_dist.csv', "magenta"))
+print(colored(data, 'cyan'), '\n')
 
 if args.pruebaKs:
     print(colored('\n\nPrueba KS activada', "magenta"))
@@ -50,7 +61,3 @@ if args.pruebaKs:
 if args.pruebaJi:
     print(colored('Prueba Ji cuadrado activada', "magenta"))
 # TODO: Hacer la Prueba Ji Cuadrado y mostrar el resultado
-
-
-
-
