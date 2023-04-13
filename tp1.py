@@ -59,10 +59,31 @@ print(colored(data, 'cyan'), '\n')
 
 data.to_csv(args.outputFilename, index=False, columns=['Simulación'])
 
-if args.pruebaKs:
-    print(colored('\n\nPrueba KS activada', "magenta"))
-# TODO: Hacer la prueba KS y mostrar el resultado
 
-if args.pruebaJi:
-    print(colored('Prueba Ji cuadrado activada', "magenta"))
-# TODO: Hacer la Prueba Ji Cuadrado y mostrar el resultado
+# Getting generated cumulative probabilities from the simulation and calculating max KS distance
+if args.pruebaKs:
+    print(colored('Prueba KS activada', "magenta"))
+    sum = 0
+    Ks_distance = []
+    for index, row in data.iterrows():
+        generated_prob = row['Simulación'] / args.n
+        sum += generated_prob
+        Ks_distance.append(abs(sum - row['Probabilidad Acum']))
+
+    print(colored(f"Valor del estadistico KS: {round(max(Ks_distance), 4)} \n", "yellow"))
+
+    
+
+# TODO: corregir
+# if args.pruebaJi:
+#     print(colored('Prueba Ji cuadrado activada', "magenta"))
+#     deviations = []
+#     for index, row in data.iterrows():
+#         generated_prob = row['Simulación'] / args.n
+#         deviations.append(pow(generated_prob - row['Probabilidad'], 2) / row['Probabilidad'])
+
+#     ji2 = 0
+#     for dev in deviations:
+#         ji2 += dev
+
+#     print(colored(f"Valor del estadistico Ji Cuadrado es: {round (ji2, 4)}", "yellow"))
