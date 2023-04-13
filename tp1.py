@@ -72,18 +72,19 @@ if args.pruebaKs:
 
     print(colored(f"Valor del estadistico KS: {round(max(Ks_distance), 4)} \n", "yellow"))
 
-    
 
-# TODO: corregir
-# if args.pruebaJi:
-#     print(colored('Prueba Ji cuadrado activada', "magenta"))
-#     deviations = []
-#     for index, row in data.iterrows():
-#         generated_prob = row['Simulación'] / args.n
-#         deviations.append(pow(generated_prob - row['Probabilidad'], 2) / row['Probabilidad'])
 
-#     ji2 = 0
-#     for dev in deviations:
-#         ji2 += dev
+# Getting expected and generated frecuencies and calculating chi squared statistical value  
+if args.pruebaJi:
+    print(colored('Prueba Ji cuadrado activada', "magenta"))
+    deviations = []
+    for index, row in data.iterrows():
+        expected_frec = row['Probabilidad'] * args.n
+        generated_frec = row['Simulación']
+        deviations.append(pow(generated_frec - expected_frec, 2) / expected_frec)
 
-#     print(colored(f"Valor del estadistico Ji Cuadrado es: {round (ji2, 4)}", "yellow"))
+    ji2 = 0
+    for dev in deviations:
+        ji2 += dev
+
+    print(colored(f"Valor del estadistico Ji Cuadrado: {round (ji2, 4)}", "yellow"))
