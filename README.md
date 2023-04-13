@@ -6,6 +6,7 @@ Este repositorio contiene un programa que permite generar valores
 simulados que sigan una determinada distribución de probabilidad.
 
 **NOTA:** 
+
 Es necesario previamente correr los comandos:
 > py -m pip install pandas
 
