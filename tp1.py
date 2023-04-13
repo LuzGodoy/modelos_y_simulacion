@@ -83,6 +83,8 @@ if args.pruebaJi:
         generated_frec = row['Simulación']
         deviations.append(pow(generated_frec - expected_frec, 2) / expected_frec)
 
-    ji2 = sum(deviations)
+    ji2 = 0
+    for dev in deviations:
+        ji2 += dev
 
     print(colored(f"Valor del estadistico Ji Cuadrado: {round (ji2, 4)}", "yellow"))
