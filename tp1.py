@@ -53,26 +53,36 @@ for randomNumber in randomNumbers:
         i+=1
 
 data['Simulación']=simulation
-
-print(colored('\nDatos en el archivo prob_dist.csv', "magenta"))
-print(colored(data, 'cyan'), '\n')
-
 data.to_csv(args.outputFilename, index=False, columns=['Simulación'])
 
+# Calculate the probabilities of the simulated values
+sim_probs = []
+sim_acum = []
+sum = 0
+for index, row in data.iterrows():
+    prob=row['Simulación']/ args.n
+    sim_probs.append(prob)
+    sum += prob
+    sim_acum.append(sum)
+
+data['Sim Prob']=sim_probs
+data['Sim Prob Acum']= sim_acum
+
+# Show complete Data Frame
+print(colored('\nDatos en el archivo prob_dist.csv', "magenta"))
+print(colored(data.to_string(index=False), 'cyan'), '\n')
+
+total_sim= 0
+for sim in data['Simulación']:
+    total_sim+=sim
 
 # Getting generated cumulative probabilities from the simulation and calculating max KS distance
 if args.pruebaKs:
     print(colored('Prueba KS activada', "magenta"))
-    sum = 0
     Ks_distance = []
     for index, row in data.iterrows():
-        generated_prob = row['Simulación'] / args.n
-        sum += generated_prob
-        Ks_distance.append(abs(sum - row['Probabilidad Acum']))
-
+        Ks_distance.append(abs(row['Sim Prob Acum'] - row['Probabilidad Acum']))
     print(colored(f"Valor del estadistico KS: {round(max(Ks_distance), 4)} \n", "yellow"))
-
-
 
 # Getting expected and generated frecuencies and calculating chi squared statistical value  
 if args.pruebaJi:
