@@ -2,8 +2,7 @@
 
 Alumnos: Luz Godoy y Guillermo Arregin
 
-Este repositorio contiene un programa que permite generar valores 
-simulados que sigan una determinada distribución de probabilidad.
+El script `tp1.py` permite generar valores simulados que sigan una determinada distribución de probabilidad.
 
 **NOTA:** 
 
@@ -14,10 +13,9 @@ Es necesario previamente correr los comandos:
 
 > pip install termcolor
 
-
 ## Cómo ejecutar el script?
 
-> py tp1 prob_dist.csv values.csv n [-d] [-x]
+`> py tp1.py prob_dist.csv values.csv n [-d] [-x]`
 
 prob_dist.csv -> Nombre del archivo csv que contiene en la primera columna contiene los valores esperados y la segunda las probabilidades. 
 
@@ -31,4 +29,18 @@ x -> Flag para mostrar el estadistico de prueba ji cuadrado
 
 Se puede usar la flag -h para mostrar un mensaje de ayuda, que explica como utilizar los parametros.
 
-> py tp1.py -h
+`> py tp1.py -h`
+
+# Trabajo Práctico 2
+
+El script `tp2.py` calcula iterativamente la solución de un problema lineal a partir de su forma matematica estandar, por medio del método simplex. Este script soporta la maximización y la minimización de la función objetivo. No tiene en consideración restricciones que no sean de menor o igual.
+
+## Cómo ejecutar el script?
+
+`> py tp2.py model.csv (-m | -M)`
+
+| Parametros | Descripción |
+| --- | --- |
+| model.csv | Nombre del archivo que contiene en la primera fila los coeficientes de la función objetivo y en el resto de las filas los coeficientes técnicos de las restricciones y los términos independientes en la última columna. |
+| -m | Flag que indica que el problema es de minimización. |
+| -M | Flag que indica que el problema es de maximización. |
