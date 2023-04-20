@@ -4,6 +4,7 @@ import argparse
 import csv
 import sys
 import simplex_utils as utils
+from tabulate import tabulate as tab
 
 parser = argparse.ArgumentParser(
     description=' calcula iterativamente la solución de un problema lineal a partir de su forma matematica estandar, por medio del método simplex.',
@@ -66,14 +67,19 @@ for i in range(num_restrictions):
   base[i] = f"S{i+1}"
 zj, cjzj = utils.getcjzj(target_function, num_restrictions, base, data)
 
-print("Restricciones:")
-print(data.head())
-print("\nBase")
-print(base)
-print("\nZj:")
-print(zj)
-print("\nCj-Zj")
-print(cjzj)
+# print("Restricciones:")
+# print(data.head())
+# print("\nBase")
+# print(base)
+# print("\nZj:")
+# print(zj)
+# print("\nCj-Zj")
+# print(cjzj)
+
+
+table, columns = utils.settable(num_restrictions, data, target_function, base, zj, cjzj)
+print(tab(table, columns, tablefmt="grid"))
+
 
 # TODO: Cuerpo principal del programa
 
