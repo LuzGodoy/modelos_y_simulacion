@@ -3,7 +3,6 @@ from termcolor import colored
 import argparse 
 import csv
 import sys
-import sympy as sp
 
 """Calculates cj and cj-zj and returns them as two dicts"""
 def getcjzj(targetf, num_res, currentbase, df):
@@ -38,28 +37,35 @@ def finished(cz):
 
 """Gets maximum value within the cj-zj dict"""
 def getmaxvar(cz):
-  max = 0
+  maxi = 0
   maxvar = None
   for key in cz.keys():
-    if (max != sp.Max(max, cz[key])):
-      max = cz[key]
+    if (maxi != max(maxi, cz[key])):
+      maxi = cz[key]
       maxvar = key
   return maxvar
 
 
 """Gets minimun value within the cj-zj dict"""
 def getminvar(cz):
-  min = 0
+  mini = 0
   minvar = None
   for key in cz.keys():
-    if (min != sp.Min(min, cz[key])):
-      min = cz[key]
+    if (mini != min(mini, cz[key])):
+      mini = cz[key]
       minvar = key
   return minvar
 
 
 """"""
-# def 
+def minimumexitbase(num_res, df, selected_column):
+  mini = None
+  minindex = None
+  for i in range(num_res):
+    if (mini == None):
+      mini = df.at[i, selected_column]
+
+
 
 
 
@@ -106,21 +112,13 @@ var_names.append("Solution")
 data.columns = var_names
 
 
-# Define constant M
-M = sp.symbols("M", positive=True) # positive attribute enables Max/Min comparissons
-
-
 # Standarize restrictions and target function
 one_position = 0
 for i in range(num_restrictions):
   new_col = f"S{i+1}"
-  new_artificial_col = f"A{i+1}"
   data.insert(column=new_col, value=0, loc=len(data.columns))
-  data.insert(column=new_artificial_col, value=0, loc=len(data.columns))
-  data.at[i, new_col] = -1
-  data.at[i, new_artificial_col] = 1
+  data.at[i, new_col] = 1
   target_function[new_col] = 0
-  target_function[new_artificial_col] = -M
   one_position += 1
 
 
@@ -129,13 +127,19 @@ base = dict()
 zj = dict()
 cjzj = dict()
 for i in range(num_restrictions):
-  base[i] = f"A{i+1}"
+  base[i] = f"S{i+1}"
 zj, cjzj = getcjzj(target_function, num_restrictions, base, data)
 
-
+print("Restricciones:")
 print(data.head())
+print("\nBase")
+print(base)
+print("\nZj:")
 print(zj)
+print("\nCj-Zj")
 print(cjzj)
+# TODO: Cuerpo principal del programa
+
 # while not finished(cjzj):
 #   if (args.maximize):
 #     maxvar = getmaxvar(cjzj)
