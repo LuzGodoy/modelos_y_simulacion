@@ -1,5 +1,5 @@
 """Calculates cj and cj-zj and returns them as two dicts"""
-def getcjzj(targetf, num_res, currentbase, df):
+def getCjZj(targetf, num_res, currentbase, df):
   z = dict()
   cz = dict()
   for var in targetf.keys():
@@ -12,6 +12,7 @@ def getcjzj(targetf, num_res, currentbase, df):
   for i in range(num_res):
     acum_solution += df.at[i, "Solution"] * targetf[currentbase[i]]
   z["Solution"] = acum_solution
+  
   return z, cz
 
 
@@ -27,7 +28,7 @@ def finished(cz, args):
       return True
     else:
       return False
-  
+
 
 """Gets maximum value within the cj-zj dict"""
 def getmaxvar(cz):
@@ -41,6 +42,7 @@ def getmaxvar(cz):
       if (maxi != max(maxi, cz[key])):
         maxi = cz[key]
         maxvar = key
+  
   return maxvar
 
 
@@ -56,6 +58,7 @@ def getminvar(cz):
       if (mini != min(mini, cz[key])):
         mini = cz[key]
         minvar = key
+  
   return minvar
 
 
@@ -72,6 +75,7 @@ def minexitbase(num_res, df, selected_column):
       if (mini != min(mini, value)):
         mini = value
         minindex = i
+  
   return minindex
 
 
@@ -88,6 +92,7 @@ def maxexitbase(num_res, df, selected_column):
       if (maxi != min(maxi, value)):
         maxi = value
         maxindex = i
+  
   return maxindex
 
 
@@ -99,6 +104,7 @@ def replacebase(selected_column, base_index, base, df):
   intersection = df.at[base_index, selected_column]
   for var in df.columns:
     new_df.at[base_index, var] = df.at[base_index, var] / intersection
+  
   return new_df, new_base
 
 
@@ -110,6 +116,7 @@ def updatevalues(selected_column, replaced_index, base, df):
       multiplier = df.at[index, selected_column]
       for col in df.columns:
         new_df.at[index, col] = df.at[index, col] - (df.at[replaced_index, col] * multiplier)
+  
   return new_df
 
 

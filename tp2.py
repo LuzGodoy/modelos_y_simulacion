@@ -7,7 +7,7 @@ import simplex_utils as utils
 from tabulate import tabulate as tab
 
 parser = argparse.ArgumentParser(
-    description=' calcula iterativamente la solución de un problema lineal a partir de su forma matematica estandar, por medio del método simplex.',
+    description='Este script calcula iterativamente la solución de un problema lineal a partir de su forma matematica estandar, por medio del método simplex.',
 )
 
 # Define positional arguments
@@ -18,16 +18,13 @@ group.add_argument('-m', '--minimize', action='store_true', help='Indica que el 
 group.add_argument('-M', '--maximize', action='store_true', help='Indica que el problema es de maximizacion')
 
 args = parser.parse_args()
-
 if (args.minimize):
   print(colored("Minimización Activada", 'magenta'))
 elif (args.maximize):
   print(colored("Maximización Activada", 'magenta'))
 else:
-  print("-M or -m flag is required")
+  print(colored("Una de las flags -M o -m debe estar activada.", 'magenta'))
   sys.exit()
-
-
 
 # Read CSV's first row for target function
 with open(args.inputFilename, newline='') as f:
@@ -36,7 +33,7 @@ with open(args.inputFilename, newline='') as f:
   target_function = dict()      
 for i in range(len(target_coef)):
   target_function[f"X{i+1}"] = int(target_coef[i])
-  
+
 
 # Read Comma Separated Value's file for restrictions and get amount of variables
 data = pd.read_csv(args.inputFilename, header=None, skiprows=1)
@@ -48,7 +45,6 @@ for i in range(num_variables):
 var_names.append("Solution")
 data.columns = var_names
 
-
 # Standarize restrictions and target function
 one_position = 0
 for i in range(num_restrictions):
@@ -58,17 +54,18 @@ for i in range(num_restrictions):
   target_function[new_col] = 0
   one_position += 1
 
-
 # Initialize auxiliar collections
-base = dict()
-zj = dict()
-cjzj = dict()
+base = dict(); zj = dict(); cjzj = dict()
 for i in range(num_restrictions):
   base[i] = f"S{i+1}"
-zj, cjzj = utils.getcjzj(target_function, num_restrictions, base, data)
+zj, cjzj = utils.getCjZj(target_function, num_restrictions, base, data)
 
+# Show the table with the values of the initialization 
+print(colored('Fase de Inicialización', 'magenta'))
+table, columns = utils.settable(num_restrictions, data, target_function, base, zj, cjzj)
+print(tab(table, columns, tablefmt="grid"))
 
-
+# Start iterations
 iterations = 0
 while not utils.finished(cjzj, args):
   iterations += 1
@@ -80,7 +77,7 @@ while not utils.finished(cjzj, args):
     replace_index = utils.maxexitbase(num_restrictions, data, selected_column)
   data, base = utils.replacebase(selected_column, replace_index, base, data)
   data = utils.updatevalues(selected_column, replace_index, base, data)
-  zj, cjzj = utils.getcjzj(target_function, num_restrictions, base, data)
+  zj, cjzj = utils.getCjZj(target_function, num_restrictions, base, data)
   print(f"\n\nIteracion: {iterations}")
   table, columns = utils.settable(num_restrictions, data, target_function, base, zj, cjzj)
   print(tab(table, columns, tablefmt="grid"))
