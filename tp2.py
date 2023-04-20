@@ -67,25 +67,26 @@ for i in range(num_restrictions):
   base[i] = f"S{i+1}"
 zj, cjzj = utils.getcjzj(target_function, num_restrictions, base, data)
 
-# print("Restricciones:")
-# print(data.head())
-# print("\nBase")
-# print(base)
-# print("\nZj:")
-# print(zj)
-# print("\nCj-Zj")
-# print(cjzj)
 
 
-table, columns = utils.settable(num_restrictions, data, target_function, base, zj, cjzj)
-print(tab(table, columns, tablefmt="grid"))
+iterations = 0
+while not utils.finished(cjzj, args):
+  iterations += 1
+  if (args.maximize):
+    selected_column = utils.getmaxvar(cjzj)
+    replace_index = utils.minexitbase(num_restrictions, data, selected_column)
+  elif (args.minimize):
+    selected_column = utils.getminvar(cjzj)
+    replace_index = utils.maxexitbase(num_restrictions, data, selected_column)
+  data, base = utils.replacebase(selected_column, replace_index, base, data)
+  data = utils.updatevalues(selected_column, replace_index, base, data)
+  zj, cjzj = utils.getcjzj(target_function, num_restrictions, base, data)
+  print(f"\n\nIteracion: {iterations}")
+  table, columns = utils.settable(num_restrictions, data, target_function, base, zj, cjzj)
+  print(tab(table, columns, tablefmt="grid"))
 
+print(colored(f"\nLa simulacion terminó en {iterations} iteraciones\n", "yellow"))
 
-# TODO: Cuerpo principal del programa
-
-# while not finished(cjzj):
-#   if (args.maximize):
-#     maxvar = getmaxvar(cjzj)
 
 
 
