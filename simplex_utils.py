@@ -1,7 +1,7 @@
-"""Calculates cj and cj-zj and returns them as two dicts"""
-def getCjZj(targetf, num_res, currentbase, df):
-  z = dict()
-  cz = dict()
+
+def get_cjzj(targetf, num_res, currentbase, df):
+  """Calculates cj and cj-zj and returns them as two dicts"""
+  z = dict(); cz = dict()
   for var in targetf.keys():
     acum = 0
     for i in range(num_res):
@@ -16,22 +16,16 @@ def getCjZj(targetf, num_res, currentbase, df):
   return z, cz
 
 
-"""Checks whether the cjzj values meet the finish criteria or not"""
-def finished(cz, args):
+def is_finished(cz, args):
+  """Checks whether the cjzj values meet the finish criteria or not"""
   if (args.maximize):
-    if (cz[getmaxvar(cz)] <= 0):
-      return True
-    else:
-      return False
+    return cz[get_max_var(cz)] <= 0
   elif (args.minimize):
-    if (cz[getminvar(cz)] >= 0):
-      return True
-    else:
-      return False
+    return cz[get_min_var(cz)] >= 0
 
 
-"""Gets maximum value within the cj-zj dict"""
-def getmaxvar(cz):
+def get_max_var(cz):
+  """Gets maximum value within the cj-zj dict"""
   maxi = 0
   maxvar = None
   for key in cz.keys():
@@ -46,8 +40,8 @@ def getmaxvar(cz):
   return maxvar
 
 
-"""Gets minimun value within the cj-zj dict"""
-def getminvar(cz):
+def get_min_var(cz):
+  """Gets minimun value within the cj-zj dict"""
   mini = 0
   minvar = None
   for key in cz.keys():
@@ -62,42 +56,42 @@ def getminvar(cz):
   return minvar
 
 
-"""Returns the index of the minimum value/solution to remove from the base"""
-def minexitbase(num_res, df, selected_column):
+def min_exit_base(num_res, df, selected_column):
+  """Returns the index of the minimum value/solution to remove from the base"""
   mini = None
-  minindex = None
+  min_index = None
   for i in range(num_res):
     value = df.at[i, "Solution"] / df.at[i, selected_column]
     if (mini == None):
       mini = value
-      minindex = i
+      min_index = i
     else:
       if (mini != min(mini, value)):
         mini = value
-        minindex = i
+        min_index = i
   
-  return minindex
+  return min_index
 
 
-"""Returns the index of the maximum value/solution to remove from the base"""
-def maxexitbase(num_res, df, selected_column):
+def max_exit_base(num_res, df, selected_column):
+  """Returns the index of the maximum value/solution to remove from the base"""
   maxi = None
-  maxindex = None
+  max_index = None
   for i in range(num_res):
     value = df.at[i, "Solution"] / df.at[i, selected_column]
     if (maxi == None):
       maxi = value
-      maxindex = i
+      max_index = i
     else:
       if (maxi != min(maxi, value)):
         maxi = value
-        maxindex = i
+        max_index = i
   
-  return maxindex
+  return max_index
 
 
-"""Returns new dataframe and base with updated values on the replaced row values"""
-def replacebase(selected_column, base_index, base, df):
+def replace_base(selected_column, base_index, base, df):
+  """Returns new dataframe and base with updated values on the replaced row values"""
   new_df = df
   new_base = base
   new_base[base_index] = selected_column
@@ -108,8 +102,8 @@ def replacebase(selected_column, base_index, base, df):
   return new_df, new_base
 
 
-"""Updates values on base rows according to the new replaced base values"""
-def updatevalues(selected_column, replaced_index, base, df):
+def update_values(selected_column, replaced_index, base, df):
+  """Updates values on base rows according to the new replaced base values"""
   new_df = df
   for index in base:
     if (index != replaced_index):
@@ -120,8 +114,8 @@ def updatevalues(selected_column, replaced_index, base, df):
   return new_df
 
 
-"""Sets table structure for tabultation"""
-def settable(num_res, df, targetf, base, zj, cjzj):
+def set_table(num_res, df, targetf, base, zj, cjzj):
+  """Sets table structure for tabultation"""
   columns = ["", ""]
   table = []
   for var in targetf.keys():
@@ -153,5 +147,5 @@ def settable(num_res, df, targetf, base, zj, cjzj):
   for key in cjzj.keys():
     table[lastindex].append(cjzj[key])
   table[lastindex].append("")
-
+  
   return table, columns

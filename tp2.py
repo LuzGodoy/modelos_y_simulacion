@@ -58,29 +58,29 @@ for i in range(num_restrictions):
 base = dict(); zj = dict(); cjzj = dict()
 for i in range(num_restrictions):
   base[i] = f"S{i+1}"
-zj, cjzj = utils.getCjZj(target_function, num_restrictions, base, data)
+zj, cjzj = utils.get_cjzj(target_function, num_restrictions, base, data)
 
 # Show the table with the values of the initialization 
-print(colored('Fase de Inicialización', 'magenta'))
-table, columns = utils.settable(num_restrictions, data, target_function, base, zj, cjzj)
-print(tab(table, columns, tablefmt="grid"))
+print(colored('\nFase de Inicialización', 'magenta'))
+table, columns = utils.set_table(num_restrictions, data, target_function, base, zj, cjzj)
+print(colored(tab(table, columns, tablefmt="grid"), 'cyan'))
 
 # Start iterations
 iterations = 0
-while not utils.finished(cjzj, args):
+while not utils.is_finished(cjzj, args):
   iterations += 1
   if (args.maximize):
-    selected_column = utils.getmaxvar(cjzj)
-    replace_index = utils.minexitbase(num_restrictions, data, selected_column)
+    selected_column = utils.get_max_var(cjzj)
+    replace_index = utils.min_exit_base(num_restrictions, data, selected_column)
   elif (args.minimize):
-    selected_column = utils.getminvar(cjzj)
-    replace_index = utils.maxexitbase(num_restrictions, data, selected_column)
-  data, base = utils.replacebase(selected_column, replace_index, base, data)
-  data = utils.updatevalues(selected_column, replace_index, base, data)
-  zj, cjzj = utils.getCjZj(target_function, num_restrictions, base, data)
-  print(f"\n\nIteracion: {iterations}")
-  table, columns = utils.settable(num_restrictions, data, target_function, base, zj, cjzj)
-  print(tab(table, columns, tablefmt="grid"))
+    selected_column = utils.get_min_var(cjzj)
+    replace_index = utils.max_exit_base(num_restrictions, data, selected_column)
+  data, base = utils.replace_base(selected_column, replace_index, base, data)
+  data = utils.update_values(selected_column, replace_index, base, data)
+  zj, cjzj = utils.get_cjzj(target_function, num_restrictions, base, data)
+  print(colored(f"\nIteracion: {iterations}", 'magenta'))
+  table, columns = utils.set_table(num_restrictions, data, target_function, base, zj, cjzj)
+  print(colored(tab(table, columns, tablefmt="grid"), 'cyan'))
 
 print(colored(f"\nLa simulacion terminó en {iterations} iteraciones\n", "yellow"))
 
