@@ -74,11 +74,13 @@ while not utils.is_finished(cjzj, args):
     selected_column = utils.get_max_var(cjzj)
     replace_index = utils.min_exit_base(num_restrictions, data, selected_column)
     if replace_index == None:
+      print(colored(f"\nLa simulación terminó debido a que no hay pivotes positivos", "red"))
       break
   elif (args.minimize):
     selected_column = utils.get_min_var(cjzj)
     replace_index = utils.max_exit_base(num_restrictions, data, selected_column)
     if replace_index == None:
+      print(colored(f"\nLa simulación terminó debido a que no hay pivotes positivos", "red"))
       break
   data, base = utils.replace_base(selected_column, replace_index, base, data)
   data = utils.update_values(selected_column, replace_index, base, data)

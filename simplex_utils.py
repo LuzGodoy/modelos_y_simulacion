@@ -61,7 +61,7 @@ def min_exit_base(num_res, df, selected_column):
   mini = None
   min_index = None
   for i in range(num_res):
-    if (df.at[i, selected_column] != 0):
+    if (df.at[i, selected_column] > 0):
       value = df.at[i, "Solution"] / df.at[i, selected_column]
       if (mini == None):
         mini = value
@@ -79,7 +79,7 @@ def max_exit_base(num_res, df, selected_column):
   maxi = None
   max_index = None
   for i in range(num_res):
-    if (df.at[i, selected_column] != 0):
+    if (df.at[i, selected_column] > 0):
       value = df.at[i, "Solution"] / df.at[i, selected_column]
       if (maxi == None):
         maxi = value
