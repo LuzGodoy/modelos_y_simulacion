@@ -67,20 +67,30 @@ print(colored(tab(table, columns, tablefmt="grid"), 'cyan'))
 
 # Start iterations
 iterations = 0
+cjzj_history = []
 while not utils.is_finished(cjzj, args):
   iterations += 1
   if (args.maximize):
     selected_column = utils.get_max_var(cjzj)
     replace_index = utils.min_exit_base(num_restrictions, data, selected_column)
+    if replace_index == None:
+      break
   elif (args.minimize):
     selected_column = utils.get_min_var(cjzj)
     replace_index = utils.max_exit_base(num_restrictions, data, selected_column)
+    if replace_index == None:
+      break
   data, base = utils.replace_base(selected_column, replace_index, base, data)
   data = utils.update_values(selected_column, replace_index, base, data)
   zj, cjzj = utils.get_cjzj(target_function, num_restrictions, base, data)
   print(colored(f"\nIteracion: {iterations}", 'magenta'))
   table, columns = utils.set_table(num_restrictions, data, target_function, base, zj, cjzj)
   print(colored(tab(table, columns, tablefmt="grid"), 'cyan'))
+  if ((base,cjzj) in cjzj_history):
+    print(colored(f"\nLa simulación terminó debido a un ciclo infinito", "red"))
+    break
+  else:
+    cjzj_history.append((base,cjzj))
 
 print(colored(f"\nLa simulacion terminó en {iterations} iteraciones\n", "yellow"))
 
