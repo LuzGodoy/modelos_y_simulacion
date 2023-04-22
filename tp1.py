@@ -2,6 +2,8 @@ import pandas as pd
 from termcolor import colored
 import argparse 
 import random
+from tabulate import tabulate as tab
+import tp1utils as utils
 
 parser = argparse.ArgumentParser(
   description='Este script genera valores simulados que sigan una determinada distribución de probabilidad.',
@@ -68,8 +70,11 @@ data['Sim Prob']=sim_probs
 data['Sim Prob Acum']= sim_acum
 
 # Show complete Data Frame
-print(colored('\nDatos en el archivo prob_dist.csv', "magenta"))
-print(colored(data.to_string(index=False), 'cyan'), '\n')
+print("\n")
+print(colored('\nDatos en el archivo prob_dist.csv\n', "magenta"))
+# print(colored(data.to_string(index=False), 'cyan'), '\n')
+table, columns = utils.set_table(data)
+print(colored(tab(table, columns, tablefmt="grid"), "cyan"))
 
 total_sim= 0
 for sim in data['Simulación']:
