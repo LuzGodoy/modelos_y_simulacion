@@ -3,7 +3,7 @@ from termcolor import colored
 import argparse 
 import random
 from tabulate import tabulate as tab
-import tp1utils as utils
+import tp1_utils as utils
 
 parser = argparse.ArgumentParser(
   description='Este script genera valores simulados que sigan una determinada distribución de probabilidad.',
@@ -72,7 +72,6 @@ data['Sim Prob Acum']= sim_acum
 # Show complete Data Frame
 print("\n")
 print(colored('\nDatos en el archivo prob_dist.csv\n', "magenta"))
-# print(colored(data.to_string(index=False), 'cyan'), '\n')
 table, columns = utils.set_table(data)
 print(colored(tab(table, columns, tablefmt="grid"), "cyan"))
 
@@ -83,20 +82,11 @@ for sim in data['Simulación']:
 # Getting generated cumulative probabilities from the simulation and calculating max KS distance
 if args.pruebaKs:
   print(colored('Prueba KS activada', "magenta"))
-  Ks_distance = []
-  for index, row in data.iterrows():
-    Ks_distance.append(abs(row['Sim Prob Acum'] - row['Probabilidad Acum']))
-  print(colored(f"Valor del estadistico KS: {round(max(Ks_distance), 4)} \n", "yellow"))
+  ks_distance= utils.test_ks_distance(data)
+  print(colored(f"Valor del estadistico KS: {round(max(ks_distance), 4)} \n", "yellow"))
 
 # Getting expected and generated frecuencies and calculating chi squared statistical value  
 if args.pruebaJi:
   print(colored('Prueba Ji cuadrado activada', "magenta"))
-  deviations = []
-  for index, row in data.iterrows():
-    expected_frec = row['Probabilidad'] * args.n
-    generated_frec = row['Simulación']
-    deviations.append(pow(generated_frec - expected_frec, 2) / expected_frec)
-  ji2 = 0
-  for dev in deviations:
-    ji2 += dev
+  ji2= utils.test_chi_squared(data, args.n)
   print(colored(f"Valor del estadistico Ji Cuadrado: {round (ji2, 4)}", "yellow"))

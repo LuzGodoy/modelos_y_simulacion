@@ -95,7 +95,3 @@ while not utils.is_finished(cjzj, args):
     cjzj_history.append((base,cjzj))
 
 print(colored(f"\nLa simulacion terminó en {iterations} iteraciones\n", "yellow"))
-
-
-
-
