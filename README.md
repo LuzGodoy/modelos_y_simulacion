@@ -25,6 +25,8 @@ Es necesario previamente instalar las siguientes librerias:
 > py tp1.py prob_dist.csv values.csv n [-d] [-x]
 ```
 
+**Nota**: Los corchetes indican que es un parametro opcional. Ninguno, uno o ambos parametros pueden añadirse.
+
 | Parametros | Descripción |
 | :---: | --- |
 | prob_dist.csv | Nombre del archivo csv que contiene en la primera columna contiene los valores esperados y la segunda las probabilidades. |
