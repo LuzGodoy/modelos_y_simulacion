@@ -19,9 +19,9 @@ group.add_argument('-M', '--maximize', action='store_true', help='Indica que el 
 
 args = parser.parse_args()
 if (args.minimize):
-  print(colored("Minimización Activada", 'magenta'))
+  print(colored("La función objetivo se manimizará.", 'magenta'))
 elif (args.maximize):
-  print(colored("Maximización Activada", 'magenta'))
+  print(colored("La función objetivo se maximizará.", 'magenta'))
 else:
   print(colored("Una de las flags -M o -m debe estar activada.", 'magenta'))
   sys.exit()
