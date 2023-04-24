@@ -74,24 +74,6 @@ def min_exit_base(num_res, df, selected_column):
   return min_index
 
 
-def max_exit_base(num_res, df, selected_column):
-  """Returns the index of the maximum value/solution to remove from the base, returns None if there are no valid options"""
-  maxi = None
-  max_index = None
-  for i in range(num_res):
-    if (df.at[i, selected_column] > 0):
-      value = df.at[i, "Solution"] / df.at[i, selected_column]
-      if (maxi == None):
-        maxi = value
-        max_index = i
-      else:
-        if (maxi != min(maxi, value)):
-          maxi = value
-          max_index = i
-  
-  return max_index
-
-
 def replace_base(selected_column, base_index, base, df):
   """Returns new dataframe and base with updated values on the replaced row values"""
   new_df = df
