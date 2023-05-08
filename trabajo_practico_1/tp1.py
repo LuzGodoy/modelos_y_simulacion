@@ -3,7 +3,7 @@ from termcolor import colored
 import argparse 
 import random
 from tabulate import tabulate as tab
-import tp1_utils as utils
+import trabajo_practico_1.tp1_utils as utils
 
 parser = argparse.ArgumentParser(
   description='Este script genera valores simulados que sigan una determinada distribución de probabilidad.',
