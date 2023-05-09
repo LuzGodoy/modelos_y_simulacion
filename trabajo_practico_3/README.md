@@ -3,17 +3,11 @@
 
 El script `tp3.py` resuelve un problema de decisión a partir de la matriz de compensaciones. 
 
-* En condiciones de riesgo, el número de alternativa (1 a n) que debería tomar el decisor de
-acuerdo a las probabilidades para cada posible estado de la naturaleza, tanto para
-beneficios como para costos.
+* En **condiciones de riesgo**, se muestra el número de alternativa que debería tomar el decisor de acuerdo a las probabilidades para cada posible estado de la naturaleza, tanto para beneficios como para costos.
 
-* En condiciones de incertidumbre, el número de alternativa (1 a n) que debería tomar el
-decisor para cada uno de los cuatro criterios vistos en la teoría, tanto para beneficios como
-para costos.
+* En **condiciones de incertidumbre**, se muestra el número de alternativa que debería tomar el decisor para cada uno de los cuatro criterios (Laplace, Wald, Hurwicz, savage), tanto para beneficios como para costos.
 
-* En condiciones de conflicto, si el juego se puede resolver con una estrategia pura óptima,
-el número de alternativa (1 a n) que debería tomar el decisor, el número de alternativa (1 a
-m) que seleccionaría el oponente y el valor de juego correspondiente.
+* En **condiciones de conflicto**, se indica si el juego se puede resolver con una estrategia pura óptima Además se muestra el número de alternativa que debería tomar el decisor, el número de alternativa que seleccionaría el oponente y el valor de juego correspondiente.
 
 
 ### Cómo ejecutar el script?

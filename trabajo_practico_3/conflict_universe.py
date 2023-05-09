@@ -3,5 +3,5 @@
 # Tiene que poder determinar cuando no se puede resolver por estrategia pura.
 
 def decide():
-    
-    return
+  
+  return
