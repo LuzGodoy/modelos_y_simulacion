@@ -4,8 +4,6 @@ import numpy as np
 from termcolor import colored
 
 def decide(matrix):
-  choices= len(matrix.index)-1
-  nature_statuses= len(matrix.columns)
   # Save the probabilities in a separated array
   probabilities= matrix.iloc[-1].values
   matrix = matrix.drop(matrix.index[-1])
@@ -15,10 +13,11 @@ def decide(matrix):
   array= np.array(expectation)
   max_index = array.argmax()
   min_index = array.argmin()
-  print(colored(f"Problema de Beneficios:\nSe recomienda elegir la alternativa {max_index}", 'cyan'))
+  print(colored(f"\nProblema de Beneficios:\nSe recomienda elegir la alternativa {max_index}", 'cyan'))
   print(colored(f"Que presenta una esperanza de {array[max_index]}",'cyan'))
-  print(colored(f"Problema de Costos:\nSe recomienda elegir la alternativa {min_index}", 'light_red'))
-  print(colored(f"Que presenta una esperanza de {array[min_index]}",'light_red'))
+  print(colored(f"\nProblema de Costos:\nSe recomienda elegir la alternativa {min_index}", 'light_blue'))
+  print(colored(f"Que presenta una esperanza de {array[min_index]}",'light_blue'))
+  
   return
 
 
