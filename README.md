@@ -17,6 +17,8 @@ Es necesario previamente instalar las siguientes librerias:
 > py -m pip install argparse
 
 > py -m pip install termcolor
+
+> py -m pip install tabulate
 ```
 
 ### Cómo ejecutar el script?
@@ -47,6 +49,12 @@ El script `tp2.py` calcula iterativamente la solución de un problema lineal a p
 
 Es necesario previamente instalar la siguiente libreria:
 ```
+> py -m pip install pandas
+
+> py -m pip install argparse
+
+> py -m pip install termcolor
+
 > py -m pip install tabulate
 ```
 
