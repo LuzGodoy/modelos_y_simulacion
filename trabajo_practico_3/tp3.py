@@ -14,7 +14,7 @@ parser.add_argument('inputFile', type=str, help='Nombre del archivo csv con la m
 
 parser.add_argument('-r', '--risk', action='store_true', help='Indica que el problema de decisión es en condiciones de riesgo.')
 parser.add_argument('-u', '--uncertain', action='store_true', help='Indica que el problema de decisión es en condiciones de incertidumbre.')
-parser.add_argument('-i','--coeficient', type=int, help='Coeficiente del criterio de Hurwicz para un problema de decisión en condiciones de incertidumbre.')
+parser.add_argument('-i','--coeficient', type=float, help='Coeficiente del criterio de Hurwicz para un problema de decisión en condiciones de incertidumbre.')
 parser.add_argument('-c', '--conflict', action='store_true', help='Indica que el problema de decisión es en condiciones de conflicto.')
 
 args = parser.parse_args()
@@ -25,14 +25,17 @@ matrix = pd.read_csv(args.inputFile, header=None)
 
 if args.risk: 
   print(colored("Problema de decision condiciones de riesgo", 'magenta'))
-   # TODO: add headers for the nature statuses and decision alternatives to print them in the table below, and diferenciate the probabilities
+   # TODO: add column's titles for the nature statuses and decision 
+   # alternatives to print them in the table below, and diferenciate 
+   # the probabilities
   print(tab(matrix, tablefmt='rounded_grid', showindex=False))
   risk_algorithm.decide(matrix)
 elif args.uncertain:
   print(colored("Problema de decision condiciones de incertidumbre", 'magenta'))
-  # TODO: add headers for the nature statuses and decision alternatives to print them in the table below
+  # TODO: add column's titles for the nature statuses and decision 
+  # alternatives to print them in the table below
   print(tab(matrix, tablefmt='rounded_grid', showindex=False))
-  uncertain_algorithm.decide(matrix)
+  uncertain_algorithm.decide(matrix, args.coeficient)
 elif args.conflict:
   print(colored("Problema de decision condiciones de  conflicto", 'magenta'))
   conflict_algorithm.decide(matrix)

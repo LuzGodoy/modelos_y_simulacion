@@ -3,12 +3,12 @@ import numpy as np
 from termcolor import colored
 from tabulate import tabulate as tab
 
-def decide(matrix):
+def decide(matrix, coef):
   choices= len(matrix.index)
   nature_statuses= len(matrix.columns)
   analize_by_laplace(matrix, choices, nature_statuses)
   analize_by_wald(matrix)
-  analize_by_hurwicz(matrix)
+  analize_by_hurwicz(matrix, coef)
   analize_by_savage(matrix)
 
   return
@@ -57,10 +57,33 @@ def analize_by_wald(matrix):
   print(colored(f"Que presenta un coeficiente de {maxx[miny]}",'light_blue'))
   return
 
-def analize_by_hurwicz(matrix):
+def analize_by_hurwicz(matrix, coef):
+  '''
+  Benefits ⇒ d(x) = α · maxy c(x, y) + (1 − α) · miny c(x, y)
+  Costs ⇒ d(x) = α · miny c(x, y) + (1 − α) · max y c(x, y)
+  '''
+  print(colored("\n\nMetodo de Hurwicz", 'magenta'))
+  complement= 1-coef
+  benefits= []; costs=[]
+  for index, row in matrix.iterrows():
+    array= np.array(row)
+    miny=np.min(array)
+    maxy=np.max(array)
+    benefits.append(coef*maxy + complement*miny)
+    costs.append(coef*miny + complement*maxy)
+  benefits= np.array(benefits)
+  costs= np.array(costs)
+  benefit= np.argmax(benefits)
+  cost=np.argmin(costs)
+  print(colored(f"\nProblema de Beneficios:\nSe recomienda elegir la alternativa {benefit}", 'cyan'))
+  print(colored(f"Que presenta un coeficiente de {benefits[benefit]}",'cyan'))
+  print(colored(f"\nProblema de Costos:\nSe recomienda elegir la alternativa {cost}", 'light_blue'))
+  print(colored(f"Que presenta un coeficiente de {costs[cost]}",'light_blue'))
 
   return
 
 def analize_by_savage(matrix):
-
+  ''' '''
+  print(colored("\n\nMetodo de Savage", 'magenta'))
+  
   return
