@@ -13,7 +13,7 @@ El script `tp3.py` resuelve un problema de decisión a partir de la matriz de co
 ### Cómo ejecutar el script?
 
 ```
-tp3 matrix.csv ( -r | -u α | -c )
+py tp3.py matrix.csv ( -r | -u -i α | -c )
 ```
 
 | Parametros | Descripción |
@@ -21,5 +21,5 @@ tp3 matrix.csv ( -r | -u α | -c )
 | matrix.csv | Nombre del archivo csv que contiene la matriz de compensaciones del problema de decisión. |
 | r | Flag que indica que el problema de decisión es en condiciones de riesgo. |
 | u | Flag que indica que el problema de decisión es en condiciones de incertidumbre. |
-| α | Coeficiente del criterio de Hurwicz para un problema de decisión en condiciones de incertidumbre. |
+| i | Flag que indica que a continuación se añadirá el  coeficiente del criterio de Hurwicz para un problema de decisión en condiciones de incertidumbre. |
 | c | Flag que indica que el problema de decisión es en condiciones de conflicto. |

@@ -22,8 +22,8 @@ def analize_by_laplace(matrix, rows, num_col):
         averages.append(np.sum(array)/num_col)
 
     print(colored("\nPromedios de cada alternativa", 'magenta'))
-    columns = columns = name_columns(rows)
-    utils.print_table([columns, averages])
+    rows_names =  name_rows(rows)
+    utils.print_table([rows_names, averages])
 
     results = np.array(averages)
     max_index = results.argmax()
